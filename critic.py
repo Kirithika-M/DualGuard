@@ -1,12 +1,16 @@
 from sentence_transformers import SentenceTransformer, util
 import nltk
-from config import FAITHFULNESS_THRESHOLD, RELEVANCE_THRESHOLD
+import joblib
+import numpy as np
 
 nltk.download("punkt", quiet=True)
 
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 class Critic:
+    def __init__(self, model_path="hallucination_classifier.pkl"):
+        self.classifier = joblib.load(model_path)
+
     def split_sentences(self, text):
         return nltk.sent_tokenize(text)
 
@@ -26,13 +30,9 @@ class Critic:
         faith_score, best_chunk_idx = self.faithfulness_score(sentence, context_chunks)
         rel_score = self.relevance_score(sentence, query)
 
-        is_faithful = faith_score >= FAITHFULNESS_THRESHOLD
-        is_relevant = rel_score >= RELEVANCE_THRESHOLD
-
-        if is_faithful and is_relevant:
-            label = "LOW_HALLUCINATION"
-        else:
-            label = "HIGH_HALLUCINATION"
+        features = np.array([[faith_score, rel_score]])
+        pred = self.classifier.predict(features)[0]  # 0 = LOW, 1 = HIGH
+        label = "HIGH_HALLUCINATION" if pred == 1 else "LOW_HALLUCINATION"
 
         return {
             "label": label,

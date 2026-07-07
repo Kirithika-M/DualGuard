@@ -43,7 +43,7 @@ if run_button:
     else:
         with st.spinner("Retrieving, generating, and verifying..."):
             pipeline = DualGuardPipeline(documents)
-            pipeline.retriever.retrieve.__defaults__ = None  # placeholder, top_k passed explicitly below
+            # pipeline.retriever.retrieve.__defaults__ = None  # placeholder, top_k passed explicitly below
             results = pipeline.run(query)
 
         st.success("Done!")

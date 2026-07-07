@@ -5,7 +5,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 class Generator:
     def __init__(self):
-        self.model = genai.GenerativeModel("gemini-1.5-pro")
+        self.model = genai.GenerativeModel("gemini-2.5-pro")
 
     def generate(self, query, context_chunks):
         context = "\n".join(context_chunks)
