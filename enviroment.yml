@@ -1,0 +1,20 @@
+name: dualguard
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - faiss-cpu
+  - pip
+  - pip:
+      - sentence-transformers
+      - transformers
+      - torch
+      - google-generativeai
+      - xgboost
+      - scikit-learn
+      - langchain
+      - langchain-community
+      - nltk
+      - python-dotenv
+      - streamlit
