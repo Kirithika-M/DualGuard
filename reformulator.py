@@ -5,7 +5,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 class Reformulator:
     def __init__(self):
-        self.model = genai.GenerativeModel("gemini-1.5-pro")
+        self.model = genai.GenerativeModel("gemini-2.5-flash")
 
     def reformulate(self, original_query, flagged_sentence):
         prompt = f"""The following sentence was flagged as unsupported by evidence:
